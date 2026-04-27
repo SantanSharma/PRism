@@ -1,26 +1,176 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #09090b;
+  --foreground: #fafafa;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter), system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+  cursor: default;
+}
+
+/* Allow text cursor only on editable elements */
+input, textarea, [contenteditable], select {
+  cursor: text;
+  user-select: text;
+}
+
+/* Pointer cursor only on truly interactive elements */
+button, a, [role="button"] {
+  cursor: pointer;
+}
+
+/* No selection on most elements */
+body {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Allow text selection only in content areas that need it */
+input, textarea, [contenteditable], pre, code {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* Ensure screen reader only elements don't affect visible UI */
+.sr-only {
+  cursor: default !important;
+  pointer-events: none !important;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+}
+
+/* Smooth transitions */
+* {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Disable transition on specific elements */
+input, textarea, [contenteditable] {
+  transition: none;
+}
+
+/* React Flow overrides */
+.react-flow__node {
+  font-family: var(--font-sans) !important;
+}
+
+.react-flow__controls {
+  border-radius: 16px !important;
+  overflow: hidden !important;
+}
+
+.react-flow__controls button {
+  background: rgba(24, 24, 27, 0.8) !important;
+  border-color: rgba(63, 63, 70, 0.5) !important;
+  color: #a1a1aa !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+.react-flow__controls button:hover {
+  background: rgba(39, 39, 42, 0.9) !important;
+  color: #fafafa !important;
+}
+
+.react-flow__controls button svg {
+  fill: currentColor !important;
+}
+
+.react-flow__attribution {
+  display: none !important;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(63, 63, 70, 0.5);
+  border-radius: 5px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(82, 82, 91, 0.7);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+/* Selection */
+::selection {
+  background: rgba(99, 102, 241, 0.3);
+}
+
+/* Focus styles */
+:focus-visible {
+  outline: 2px solid var(--accent-primary, #6366f1);
+  outline-offset: 2px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.4); }
+  50% { box-shadow: 0 0 30px rgba(99, 102, 241, 0.6); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Glass effect */
+.glass {
+  background: rgba(24, 24, 27, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(63, 63, 70, 0.5);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent-gradient-from, #6366f1), var(--accent-gradient-to, #a855f7));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }

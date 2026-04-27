@@ -1,36 +1,126 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PR Reality Check
+
+**See what your PRs actually impact.** GitHub shows what changed — this tool shows the blast radius, hidden dependencies, missing tests, and real risk.
+
+![PR Reality Check](./screenshot.png)
+
+## What is this?
+
+Developers often approve pull requests without fully understanding the real impact of the changes. GitHub shows file diffs, but it doesn't clearly show:
+
+- **Blast radius** — what parts of the system might break?
+- **Risk level** — how dangerous is this change?
+- **Hidden dependencies** — what else depends on these files?
+- **Missing test coverage** — are there tests for these changes?
+
+**PR Reality Check** solves this by analyzing any GitHub pull request and giving you a clear picture of what's actually at stake.
+
+## Features
+
+- 🎯 **Blast Radius Analysis** — See which files and modules are affected
+- ⚠️ **Risk Scoring** — Get an instant risk assessment (Low/Medium/High/Critical)
+- 🧪 **Test Coverage Detection** — Identify source files without tests
+- 🔗 **Dependency Visualization** — Interactive impact graph
+- 📊 **Change Statistics** — Lines added/deleted, file counts
+- 💡 **Actionable Recommendations** — Suggestions to reduce risk
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- npm, yarn, or pnpm
+
+### Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/yourusername/pr-reality-check.git
+
+# Navigate to the project
+cd pr-reality-check
+
+# Install dependencies
+npm install
+
+# Start the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Paste any GitHub PR URL (e.g., `https://github.com/facebook/react/pull/12345`)
+2. Click **Analyze**
+3. View the risk analysis, impact graph, and file breakdown
 
-## Learn More
+For private repositories, add a GitHub token by clicking "Add GitHub token".
 
-To learn more about Next.js, take a look at the following resources:
+## How It Works
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **URL Parsing** — Extracts owner, repo, and PR number from the URL
+2. **API Fetching** — Retrieves PR metadata and changed files from GitHub
+3. **File Analysis** — Categorizes files (source, test, config, etc.)
+4. **Risk Calculation** — Scores each file based on:
+   - File category and sensitivity patterns
+   - Change size (additions/deletions)
+   - Whether tests exist for the file
+5. **Graph Building** — Creates an interactive visualization of file relationships
+6. **Summary Generation** — Produces a plain-English risk summary with recommendations
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Tech Stack
 
-## Deploy on Vercel
+- **Framework:** Next.js 16 (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Graph:** @xyflow/react (React Flow)
+- **API:** GitHub REST API
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Project Structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+src/
+├── app/
+│   ├── page.tsx          # Main page component
+│   ├── layout.tsx        # Root layout
+│   └── globals.css       # Global styles
+├── components/
+│   ├── PRInput.tsx       # URL input form
+│   ├── RiskSummary.tsx   # Risk analysis panel
+│   ├── RiskBadge.tsx     # Risk level indicators
+│   ├── FileList.tsx      # Changed files list
+│   ├── ImpactGraph.tsx   # Interactive graph
+│   ├── Header.tsx        # App header
+│   ├── LoadingState.tsx  # Loading indicator
+│   └── ErrorState.tsx    # Error display
+├── lib/
+│   ├── github.ts         # GitHub API integration
+│   └── risk-analyzer.ts  # Risk analysis logic
+└── types/
+    └── index.ts          # TypeScript types
+```
+
+## Privacy
+
+- **No data storage** — All analysis happens in your browser
+- **No backend** — Direct GitHub API calls
+- **Token stays local** — GitHub tokens are never sent to any server
+
+## Limitations
+
+- Works best with public repositories (private repos need a token)
+- GitHub API rate limits apply (60 req/hour unauthenticated, 5000 req/hour with token)
+- Dependency detection is heuristic-based (not full AST parsing)
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+MIT License - feel free to use this in your own projects.
+
+---
+
+**Built for developers who want to review PRs with confidence.**
