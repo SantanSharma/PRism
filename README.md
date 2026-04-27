@@ -2,8 +2,6 @@
 
 **See what your PRs actually impact.** GitHub shows what changed — this tool shows the blast radius, hidden dependencies, missing tests, and real risk.
 
-![PR Reality Check](./screenshot.png)
-
 ## What is this?
 
 Developers often approve pull requests without fully understanding the real impact of the changes. GitHub shows file diffs, but it doesn't clearly show:
